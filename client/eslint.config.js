@@ -1,17 +1,17 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import prettier from 'eslint-plugin-prettier'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
 
 export default tseslint.config(
   { ignores: ['dist'] },
   {
     extends: [
-      js.configs.recommended, 
+      js.configs.recommended,
       ...tseslint.configs.recommended,
-      'plugin:prettier/recommended' // Habilita Prettier y desactiva conflictos
+      { plugins: { prettier }, rules: { ...prettier.configs.recommended.rules } } // Configuración explícita para Prettier
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -21,7 +21,7 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      prettier // Agrega el plugin de Prettier
+      prettier, // Agrega el plugin de Prettier
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -32,4 +32,4 @@ export default tseslint.config(
       'prettier/prettier': 'error', // Muestra errores de Prettier en ESLint
     },
   },
-)
+);
